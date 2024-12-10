@@ -40,25 +40,26 @@ function convertLocalUrlToLAN(url, localIP) {
   }
 }
 
+let currentConvertedUrl = ''; // 存储转换后的URL
+
 // 主函数：获取当前标签页 URL，转换 URL，生成二维码
 function generateQRCode() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currentUrl = tabs[0].url;
 
     getLocalIPAddress(function (localIP) {
-      currentUrl = convertLocalUrlToLAN(currentUrl, localIP);
+      currentConvertedUrl = convertLocalUrlToLAN(currentUrl, localIP);
 
       try {
         // 使用 qrcode 库生成二维码
         let qr = qrcode(0, 'M');
-        qr.addData(currentUrl);
+        qr.addData(currentConvertedUrl);
         qr.make();
 
-        let qrCodeImg = qr.createImgTag(5);
+        let qrCodeImg = qr.createImgTag(8); // 增大缩放因子以生成更大的二维码
 
         // 将二维码图片插入页面
         document.getElementById('qrcode').innerHTML = qrCodeImg;
-        document.getElementById('url').innerHTML = currentUrl;
       } catch (error) {
         document.getElementById('qrcode').innerHTML = "二维码生成失败，请重试。";
       }
@@ -66,5 +67,23 @@ function generateQRCode() {
   });
 }
 
+// 复制URL到剪贴板
+function copyUrlToClipboard() {
+  if (currentConvertedUrl) {
+    navigator.clipboard.writeText(currentConvertedUrl).then(() => {
+      const button = document.getElementById('copyButton');
+      button.textContent = '已复制！';
+      setTimeout(() => {
+        button.textContent = '复制链接';
+      }, 2000);
+    }).catch(err => {
+      console.error('复制失败:', err);
+    });
+  }
+}
+
 // 页面加载完成后执行二维码生成函数
-document.addEventListener('DOMContentLoaded', generateQRCode);
+document.addEventListener('DOMContentLoaded', () => {
+  generateQRCode();
+  document.getElementById('copyButton').addEventListener('click', copyUrlToClipboard);
+});

@@ -7,26 +7,49 @@
   <style>
     body {
       background-color: #e5e5e5;
-      padding: 10px;
+      padding: 8px;
+      width: 240px;
+      margin: 0 auto;
     }
     #qrcode {
       background-color: white;
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      width: 224px;
+      height: 224px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    #url {
-      margin-top: 15px;
+    #qrcode img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto !important;
+      height: auto !important;
+    }
+    #copyButton {
+      display: block;
+      margin: 8px auto 0;
+      padding: 8px 16px;
+      background-color: #207AF2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
       font-size: 14px;
-      word-break: break-all;
-      max-width: 300px;
-      text-align: center;
+      transition: background-color 0.3s;
+      width: 224px;
+    }
+    #copyButton:hover {
+      background-color: #1b69d3;
     }
   </style>
 </head>
 <body>
   <div id="qrcode"></div>
-  <div id="url"></div>
+  <button id="copyButton">复制链接</button>
   <script src="popup.js"></script>
 </body>
 </html>
