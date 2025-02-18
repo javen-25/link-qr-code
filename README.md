@@ -3,6 +3,9 @@
 ## 项目简介
 link-qr-code 是一个 Chrome 扩展程序，可以将当前网页链接转换为二维码，方便开发者在移动设备上快速访问网页。
 
+![image](https://github.com/user-attachments/assets/d53f57f7-33ef-4502-91ad-2bd6563c3155)
+
+
 ## 功能特性
 - **生成二维码**：将当前网页链接生成二维码。
 - **本地 IP 转换**：将本地 URL 转换为局域网 URL，方便在局域网内访问。
